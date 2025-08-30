@@ -9,23 +9,27 @@ Czas ten mieści sie w zakresie od 0 do 180min
 -countBySeconds- odliczanie oraz wyświetlanie odliczania
  */
 public class Timer {
-    private int pomodoroTime;
-    private int breakTime;
+    private int pomodoroTime=25*60;
+    private int breakTime=5*60;
 
     public Timer() throws InterruptedException {
         chooseTime();
-        int decision=1;
-        Scanner scanner = new Scanner(System.in);
-        while (decision==1) {
+    }
+
+    public void fullPomodoroTime() throws InterruptedException {
+        Scanner sc = new Scanner(System.in);
+        boolean decision=true;
+
+        while(decision) {
             for (int i = 0; i < 4; i++) {
                 countPomodoroBySeconds();
                 countBreakTimeBySeconds();
             }
+            System.out.println("LONG BREAK");
+            countBreakTimeBySeconds();
 
-            System.out.println("long break: ");
-            countBySeconds(30);
-            System.out.println("would u like to continue? 0 no, 1 yes");
-            decision = scanner.nextInt();
+            System.out.println("Czy chcesz kontynuuować? ");
+            decision = sc.nextBoolean();
         }
     }
 
@@ -50,12 +54,17 @@ public class Timer {
         countBySeconds(pomodoroTime);
     }
 
+    public void countLongBreakTime() throws InterruptedException {
+        System.out.println("BREAK ");
+        countBySeconds(breakTime*4);
+    }
+
     public void countBreakTimeBySeconds() throws InterruptedException {
         System.out.println("BREAK ");
         countBySeconds(breakTime);
     }
 
-    public void countBySeconds(int intervalTime) throws InterruptedException {
+    public  void countBySeconds(int intervalTime) throws InterruptedException {
         for (int i = intervalTime; i > 0; i--) {
             int minutes = i / 60;
             int seconds = i % 60;
