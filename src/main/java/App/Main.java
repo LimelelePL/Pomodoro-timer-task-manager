@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
+// toDO: zmienic liczenie czasu na to co czat gpt mowil
 // toDo: ogaranąć wybieranie czasu w gui, ogarnac odliczanie w GUI
 
 public class Main extends Application {
@@ -27,13 +28,16 @@ public class Main extends Application {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/sample.fxml")));
             Scene scene = new Scene(root);
+
+            String css = Objects.requireNonNull(this.getClass().getResource("/style.css")).toExternalForm();
+            scene.getStylesheets().add(css);
+
             stage.setTitle("FXML Test");
             stage.setScene(scene);
             stage.show();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+         } catch (IOException e) {
+            e.printStackTrace();
         }
-
 
     }
 }

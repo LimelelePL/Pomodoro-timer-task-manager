@@ -2,8 +2,11 @@ package App;
 
 import Timer.Timer;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 
 public class Controller {
+    public Button RozpocznijPomodoro;
+    public Button DodajZadanie;
     Timer timer;
 
     public Controller() throws InterruptedException {
@@ -11,9 +14,13 @@ public class Controller {
     }
 
     public void startPomodoro(ActionEvent e) throws InterruptedException {
-        timer.countPomodoroBySeconds();
+        timer.fullPomodoroTime();
     }
-    public void stopPomodoro(ActionEvent e) throws InterruptedException {
+
+    public void StopPomodoro(ActionEvent e) throws InterruptedException {
         timer.countBreakTimeBySeconds();
+    }
+
+    public void AddTask(ActionEvent e) {
     }
 }

@@ -12,8 +12,11 @@ public class Timer {
     private int pomodoroTime=25*60;
     private int breakTime=5*60;
 
+    private int pomodoroTimeCopy=pomodoroTime;
+    private int intervals=4;
+
     public Timer() throws InterruptedException {
-        chooseTime();
+       // chooseTime();
     }
 
     public void fullPomodoroTime() throws InterruptedException {
@@ -21,10 +24,12 @@ public class Timer {
         boolean decision=true;
 
         while(decision) {
-            for (int i = 0; i < 4; i++) {
+            for (; intervals >0; intervals--) {
+                pomodoroTimeCopy=pomodoroTime;
                 countPomodoroBySeconds();
                 countBreakTimeBySeconds();
             }
+            intervals=4;
             System.out.println("LONG BREAK");
             countBreakTimeBySeconds();
 
@@ -49,10 +54,20 @@ public class Timer {
         while(pomodoroTime < 0 || breakTime < 0 || pomodoroTime>180 || breakTime>180);
     }
 
+    public void resume() throws InterruptedException {
+        fullPomodoroTime();
+    }
+
+    public void stop() throws InterruptedException {
+        System.out.println("STOP");
+        Thread.sleep(breakTime);
+    }
+
     public void countPomodoroBySeconds() throws InterruptedException {
         System.out.println("POMODORO ");
-        countBySeconds(pomodoroTime);
+        countBySeconds(pomodoroTimeCopy);
     }
+
 
     public void countLongBreakTime() throws InterruptedException {
         System.out.println("BREAK ");
@@ -68,6 +83,7 @@ public class Timer {
         for (int i = intervalTime; i > 0; i--) {
             int minutes = i / 60;
             int seconds = i % 60;
+            pomodoroTimeCopy --;
             System.out.printf("\rPozostało: %02d:%02d", minutes, seconds);
             Thread.sleep(1000);
         }
