@@ -10,8 +10,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-// toDO: zmienic liczenie czasu na to co czat gpt mowil
-// toDo: ogaranąć wybieranie czasu w gui, ogarnac odliczanie w GUI
+// ogarnac zadania
 
 public class Main extends Application {
     public static void main(String[] args){
