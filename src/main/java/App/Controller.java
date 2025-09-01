@@ -1,6 +1,6 @@
 package App;
 
-import Timer.AppTimer;
+import timer.AppTimer;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
