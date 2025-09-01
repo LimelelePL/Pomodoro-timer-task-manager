@@ -3,6 +3,8 @@ package Timer;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.function.Consumer;
+import java.util.function.IntConsumer;
 
 public class AppTimer {
     private int currentTimeTillEnd;
@@ -19,6 +21,19 @@ public class AppTimer {
     private TimerState currentState=TimerState.POMODORO;
     private TimerState previousState=TimerState.POMODORO;
 
+    private IntConsumer onTick;
+
+    public void setOnTick(IntConsumer onTick) {
+        this.onTick = onTick;
+    }
+
+    public TimerState getCurrentState() {
+        return currentState;
+    }
+
+    public int getCurrentInterval(){
+        return currentInterval;
+    }
 
     public void countPomodoro(int pomodoroTime, int breakTime, int intervals){
         this.intervals=intervals;
@@ -100,9 +115,9 @@ public class AppTimer {
             int i=intervalTime;
             @Override
             public void run() {
-                int minutes = i / 60;
-                int seconds = i % 60;
-                System.out.printf("\rPozostało: %02d:%02d", minutes, seconds);
+                if(onTick!=null) {
+                    onTick.accept(i);
+                }
                 i--;
                 currentTimeTillEnd=i;
                 if (i < 0) {
@@ -117,6 +132,7 @@ public class AppTimer {
                     if (currentState == TimerState.POMODORO ) {
                         System.out.println("Koniec pomodoro. Czas na przerwę!");
                         countBreakTimeBySeconds(breakTime);
+
                     } else if (currentState == TimerState.BREAK) {
                         System.out.println("Koniec przerwy. Kolejne pomodoro!");
                         countPomodoroBySeconds(pomodoroTime);
