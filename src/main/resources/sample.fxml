@@ -7,6 +7,7 @@
     <children>
         <Button fx:id="RozpocznijPomodoro" layoutX="253.0" layoutY="24.0" mnemonicParsing="false" onAction="#startPomodoro" text="Rozpocznij pomodoro" textOverrun="CLIP" />
         <Button fx:id="DodajZadanie" layoutX="281.0" layoutY="455.0" mnemonicParsing="false" onAction="#AddTask" text="Dodaj zadanie" />
-      <Button fx:id="stop" layoutX="458.0" layoutY="24.0" mnemonicParsing="false" onAction="#StopPomodoro" text="STOP" />
+      <Button fx:id="stop" layoutX="451.0" layoutY="24.0" mnemonicParsing="false" onAction="#StopPomodoro" text="STOP" />
+      <Button fx:id="resume" layoutX="515.0" layoutY="24.0" mnemonicParsing="false" onAction="#ResumePomodoro" text="Resume" />
     </children>
 </AnchorPane>

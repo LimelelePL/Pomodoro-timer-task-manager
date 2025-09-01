@@ -6,7 +6,11 @@ import java.util.TimerTask;
 
 public class AppTimer {
     private int currentTimeTillEnd;
-    private int currentInterval=4;
+    private int intervals;
+    private int breakTime;
+    private int pomodoroTime;
+    private int currentInterval=0;
+    private int longBreakTime;
 
     private Timer timer;
     private TimerTask timerTask;
@@ -15,23 +19,22 @@ public class AppTimer {
     private TimerState currentState=TimerState.POMODORO;
     private TimerState previousState=TimerState.POMODORO;
 
-    public AppTimer() throws InterruptedException {
-       // chooseTime();
-    }
 
     public void countPomodoro(int pomodoroTime, int breakTime, int intervals){
-        currentInterval=intervals;
-        for (int i = 0; i < intervals; i++) {
-            countPomodoroBySeconds(pomodoroTime);
-            countBreakTimeBySeconds(breakTime);
-            currentInterval--;
-        }
-        currentInterval=4;
-        countLongBreakTime(breakTime);
+        this.intervals=intervals;
+        this.breakTime=breakTime; //*60
+        this.pomodoroTime=pomodoroTime;
+        this.longBreakTime=breakTime*3; //*60
 
+        countPomodoroBySeconds(this.pomodoroTime);
     }
 
     public void resumePomodoroTimer() throws InterruptedException {
+        if (timer==null) {
+            System.out.println("Timer is not running");
+            return;
+        }
+
        if (currentState==TimerState.PAUSED) {
            if (previousState==TimerState.POMODORO) {
                countPomodoroBySeconds(currentTimeTillEnd);
@@ -43,9 +46,15 @@ public class AppTimer {
        } else {
            System.out.println("Timer is not paused");
        }
+        System.out.println("\nResuming timer...");
     }
 
     public void PausePomodoroTimer()  {
+
+        if (timer==null) {
+            System.out.println("Timer is not running");
+            return;
+        }
         timer.cancel();
         if (currentState==TimerState.POMODORO) {
             previousState=currentState;
@@ -59,24 +68,33 @@ public class AppTimer {
         } else {
             System.out.println("Timer is not running");
         }
+        System.out.println("\nTimer paused");
     }
 
     public void countPomodoroBySeconds(int time)  {
+        currentInterval++;
+        System.out.println("aktualny interval: "+currentInterval);
         currentState=TimerState.POMODORO;
         countBySeconds(time);
+
     }
 
-    public void countLongBreakTime(int time)  {
+    private void countLongBreakTime(int time)  {
         currentState=TimerState.LONG_BREAK;
-        countBySeconds(time*3);
+        countBySeconds(longBreakTime);
+        currentInterval=0;
     }
 
-    public void countBreakTimeBySeconds(int time)  {
+    private void countBreakTimeBySeconds(int time)  {
         currentState=TimerState.BREAK;
         countBySeconds(time);
     }
 
-    public void countBySeconds(int intervalTime)  {
+    private void countBySeconds(int intervalTime)  {
+        if(timer!=null) {
+            timer.cancel();
+        }
+
         timer = new Timer();
         timerTask = new TimerTask() {
             int i=intervalTime;
@@ -90,7 +108,20 @@ public class AppTimer {
                 if (i < 0) {
                     timer.cancel();
                     System.out.println("\nCzas minął!");
-                    return;
+
+                    if(currentInterval==intervals) {
+                        countLongBreakTime(15);
+                        System.out.println("long break");
+                        return;
+                    }
+                    if (currentState == TimerState.POMODORO ) {
+                        System.out.println("Koniec pomodoro. Czas na przerwę!");
+                        countBreakTimeBySeconds(breakTime);
+                    } else if (currentState == TimerState.BREAK) {
+                        System.out.println("Koniec przerwy. Kolejne pomodoro!");
+                        countPomodoroBySeconds(pomodoroTime);
+                    }
+
                 }
             }
         };

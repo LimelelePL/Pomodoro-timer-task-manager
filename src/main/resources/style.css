@@ -5,16 +5,36 @@
 #stop{
     -fx-text-fill: "red";
     -fx-background-color: "pink";
+    -fx-border-color: "990000";
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
     -fx-font-size: 15;
+    -fx-border-radius: 5px;
 }
-
 #RozpocznijPomodoro{
     -fx-text-fill: "red";
     -fx-background-color: "pink";
+    -fx-border-color: "990000";
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
     -fx-font-size: 15;
+    -fx-border-radius: 5px;
 }
 #DodajZadanie{
     -fx-text-fill: "red";
     -fx-background-color: "pink";
+    -fx-border-color: "990000";
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
     -fx-font-size: 15;
+    -fx-border-radius: 5px;
+}
+#resume{
+    -fx-text-fill: "red";
+    -fx-background-color: "pink";
+    -fx-border-color: "990000";
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+    -fx-font-size: 15;
+    -fx-border-radius: 5px;
 }

@@ -14,11 +14,15 @@ public class Controller {
     }
 
     public void startPomodoro(ActionEvent e) throws InterruptedException {
-        appTimer.countPomodoroBySeconds(10);
+        appTimer.countPomodoro(10, 5, 2);
     }
 
     public void StopPomodoro(ActionEvent e) throws InterruptedException {
         appTimer.PausePomodoroTimer();
+    }
+
+    public void ResumePomodoro(ActionEvent e) throws InterruptedException {
+        appTimer.resumePomodoroTimer();
     }
 
     public void AddTask(ActionEvent e) {
