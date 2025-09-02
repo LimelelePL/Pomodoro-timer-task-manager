@@ -1,5 +1,7 @@
 package App;
 
+import TaskManager.TaskManager;
+import javafx.scene.control.TextField;
 import timer.AppTimer;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -12,10 +14,14 @@ public class Controller {
     @FXML public Button DodajZadanie;
     @FXML private Label timeView;
     @FXML private Label currentState;
+    @FXML private TextField Zadanie;
     private final AppTimer appTimer;
+    private final TaskManager taskManager;
+
 
     public Controller() throws InterruptedException {
         appTimer = new AppTimer();
+        taskManager = new TaskManager();
     }
 
     @FXML
@@ -47,7 +53,13 @@ public class Controller {
         appTimer.resumePomodoroTimer();
     }
 
-    public void AddTask(ActionEvent e) {
+    public void TaskName(ActionEvent e) {
+        String taskName = Zadanie.getText();
+        if (!taskName.isEmpty()) {
+            taskManager.addTask(taskName);
+            Zadanie.clear();
+            System.out.println("Added task: " + taskName);
+        }
     }
 
     private String formatState(AppTimer.TimerState state) {

@@ -20,7 +20,7 @@
     -fx-font-size: 15;
     -fx-border-radius: 5px;
 }
-#DodajZadanie{
+#DodajZadanie {
     -fx-text-fill: "red";
     -fx-background-color: "pink";
     -fx-border-color: "990000";
