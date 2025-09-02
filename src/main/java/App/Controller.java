@@ -54,6 +54,8 @@ public class Controller {
     }
 
     public void TaskName(ActionEvent e) {
+        //dodac wyswietlanie zadan
+        //dodac usuwanie zadan po odznaczeniu, ze wykonane
         String taskName = Zadanie.getText();
         if (!taskName.isEmpty()) {
             taskManager.addTask(taskName);
