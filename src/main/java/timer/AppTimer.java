@@ -9,7 +9,7 @@ public class AppTimer {
     private int intervals;
     private int breakTime;
     private int pomodoroTime;
-    private int currentInterval=0;
+    private int currentInterval=1;
     private int longBreakTime;
 
     private Timer timer;
@@ -85,7 +85,6 @@ public class AppTimer {
     }
 
     public void countPomodoroBySeconds(int time)  {
-        currentInterval++;
         System.out.println("aktualny interval: "+currentInterval);
         currentState=TimerState.POMODORO;
         countBySeconds(time);
@@ -133,6 +132,7 @@ public class AppTimer {
 
                     } else if (currentState == TimerState.BREAK) {
                         System.out.println("Koniec przerwy. Kolejne pomodoro!");
+                        currentInterval++;
                         countPomodoroBySeconds(pomodoroTime);
                     }
 

@@ -123,7 +123,7 @@ public class Controller {
     }
 
 
-    public void removeTask(int index) {
+    private void removeTask(int index) {
         Label[] taskLabels = {task1, task2, task3, task4, task5, task6};
         CheckBox[] checkBoxes = {c1, c2, c3, c4, c5, c6};
 

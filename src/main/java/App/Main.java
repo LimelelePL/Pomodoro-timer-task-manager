@@ -10,7 +10,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-// ogarnac zadania
+// toDo: wybieranie czasów w gui
+// toDo: powiadamianie o końcu pomodoro i przerwy
 
 public class Main extends Application {
     public static void main(String[] args){
@@ -29,6 +30,7 @@ public class Main extends Application {
             stage.setTitle("FXML Test");
             stage.setScene(scene);
             stage.show();
+            stage.setResizable(false);
          } catch (IOException e) {
             e.printStackTrace();
         }
