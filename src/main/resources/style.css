@@ -2,6 +2,26 @@
     -fx-background-color: FFCCCC;
 }
 
+.check-box .box {
+    .check-box .box {
+        -fx-background-color: pink;
+        -fx-border-color: #990000;
+        -fx-border-width: 2px;
+        -fx-min-width: 12px;
+        -fx-min-height: 12px;
+        -fx-pref-width: 12px;
+        -fx-pref-height: 12px;
+    }
+}
+
+#task1, #task2, #task3, #task4, #task5, #task6 {
+    -fx-font-size: 20;
+    -fx-text-fill: #990000;
+    -fx-font-style: italic;
+
+}
+
+
 #stop{
     -fx-text-fill: "red";
     -fx-background-color: "pink";
@@ -11,7 +31,8 @@
     -fx-font-size: 15;
     -fx-border-radius: 5px;
 }
-#RozpocznijPomodoro{
+
+#RozpocznijPomodoro, #taskName{
     -fx-text-fill: "red";
     -fx-background-color: "pink";
     -fx-border-color: "990000";
@@ -20,7 +41,7 @@
     -fx-font-size: 15;
     -fx-border-radius: 5px;
 }
-#DodajZadanie {
+#zadanie {
     -fx-text-fill: "red";
     -fx-background-color: "pink";
     -fx-border-color: "990000";
@@ -38,3 +59,4 @@
     -fx-font-size: 15;
     -fx-border-radius: 5px;
 }
+
