@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 // toDo: powiadamianie o końcu pomodoro i przerwy
+// toDo: zapisywanie do pliku zadan
 
 public class Main extends Application {
     public static void main(String[] args){
