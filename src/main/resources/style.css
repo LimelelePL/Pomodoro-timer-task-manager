@@ -2,6 +2,18 @@
     -fx-background-color: FFCCCC;
 }
 
+.choice-box {
+    -fx-background-color: pink;
+    -fx-border-color: #990000;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+}
+
+.choice-box .label {
+    -fx-text-fill: #990000;
+    -fx-font-size: 15px;
+}
+
 .check-box .box {
     .check-box .box {
         -fx-background-color: pink;
@@ -32,7 +44,7 @@
     -fx-border-radius: 5px;
 }
 
-#RozpocznijPomodoro, #taskName{
+#RozpocznijPomodoro, #taskName, #properties{
     -fx-text-fill: "red";
     -fx-background-color: "pink";
     -fx-border-color: "990000";

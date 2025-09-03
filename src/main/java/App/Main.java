@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-// toDo: wybieranie czasów w gui
 // toDo: powiadamianie o końcu pomodoro i przerwy
 
 public class Main extends Application {
@@ -31,6 +30,7 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.show();
             stage.setResizable(false);
+
          } catch (IOException e) {
             e.printStackTrace();
         }

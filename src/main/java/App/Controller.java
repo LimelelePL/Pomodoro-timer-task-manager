@@ -1,20 +1,25 @@
 package App;
 
 import TaskManager.TaskManager;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import timer.AppTimer;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.CheckBox;
 
+import java.io.IOException;
+import java.util.Objects;
 
 
 public class Controller {
     @FXML public Button RozpocznijPomodoro;
     @FXML public Button taskName;
+    @FXML public Button properties;
 
     @FXML private Label timeView;
     @FXML private Label currentState;
@@ -26,6 +31,7 @@ public class Controller {
     @FXML private Label task6;
 
     @FXML private TextField zadanie;
+    @FXML private pomodoroPick pomodoroPickController;
 
 
     @FXML private CheckBox c1;
@@ -35,10 +41,12 @@ public class Controller {
     @FXML private CheckBox c5;
     @FXML private CheckBox c6;
 
-
     private final AppTimer appTimer;
     private final TaskManager taskManager;
 
+    private int pomodoroTime = 25;
+    private int breakTime = 5;
+    private int longBreakTime = 15;
 
     public Controller() throws InterruptedException {
         appTimer = new AppTimer();
@@ -63,8 +71,41 @@ public class Controller {
     }
 
     @FXML
+    public void chooseProperties(ActionEvent e) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pomodoroTime.fxml"));
+            Parent root = loader.load();
+
+            pomodoroPick pomodoroPickController = loader.getController();
+
+            Stage stage = new Stage();
+            stage.setTitle("Ustawienia Pomodoro");
+            Scene scene = new Scene(root);
+
+            String css = Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm();
+            scene.getStylesheets().add(css);
+
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL); //blokada glownego okna
+            stage.setResizable(false);
+            stage.showAndWait();
+
+            pomodoroTime = pomodoroPickController.getPomodoroTime();
+            breakTime = pomodoroPickController.getBreakTime();
+            longBreakTime = pomodoroPickController.getLongBreakTime();
+
+            appTimer.refreshAfterChangeProperties(pomodoroTime, breakTime, longBreakTime);
+
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
     public void startPomodoro(ActionEvent e) throws InterruptedException {
-        appTimer.countPomodoro(25*60, 5*60, 4);
+
+        appTimer.countPomodoro(pomodoroTime *60, breakTime*60, longBreakTime*60);
     }
     @FXML
     public void StopPomodoro(ActionEvent e) throws InterruptedException {

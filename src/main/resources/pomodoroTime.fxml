@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="166.0" prefWidth="239.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.pomodoroPick">
+   <children>
+      <ChoiceBox fx:id="pomodoro" layoutX="9.0" layoutY="37.0" prefHeight="26.0" prefWidth="73.0" />
+      <ChoiceBox fx:id="chooseBreak" layoutX="83.0" layoutY="37.0" prefHeight="26.0" prefWidth="73.0" />
+      <ChoiceBox fx:id="longBreak" layoutX="157.0" layoutY="37.0" prefHeight="26.0" prefWidth="73.0" />
+      <Label layoutX="8.0" layoutY="11.0" text="pomodoro" textFill="#f70b0b">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="100.0" layoutY="13.0" prefHeight="18.0" prefWidth="40.0" text="break" textFill="#df1212">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="156.0" layoutY="13.0" prefHeight="18.0" prefWidth="74.0" text="long break" textFill="#f71212">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

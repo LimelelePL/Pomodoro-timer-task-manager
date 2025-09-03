@@ -42,6 +42,23 @@ public class AppTimer {
         countPomodoroBySeconds(this.pomodoroTime);
     }
 
+    public void refreshAfterChangeProperties(int pomodoroTime, int breakTime, int longBreakTime){
+        this.intervals=currentInterval;
+        this.breakTime=breakTime;
+        this.pomodoroTime=pomodoroTime;
+        this.longBreakTime=longBreakTime;
+
+        if (currentState==TimerState.POMODORO) {
+            countPomodoroBySeconds(this.pomodoroTime);
+        } else if (currentState==TimerState.BREAK) {
+            countBreakTimeBySeconds(this.breakTime);
+        } else if (currentState==TimerState.LONG_BREAK) {
+            countLongBreakTime(this.longBreakTime);
+        }
+
+        PausePomodoroTimer();
+    }
+
     public void resumePomodoroTimer() throws InterruptedException {
         if (timer==null) {
             System.out.println("Timer is not running");
