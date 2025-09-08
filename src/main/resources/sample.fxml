@@ -19,8 +19,8 @@
                 <Image url="@pomidor_scena_bezTla.png" />
             </image>
         </ImageView>
-        <Label fx:id="timeView" layoutX="327.0" layoutY="108.0" prefHeight="79.0" prefWidth="274.0" textAlignment="CENTER" />
-        <Label fx:id="currentState" layoutX="403.0" layoutY="74.0" prefHeight="18.0" prefWidth="122.0" text="Label" />
+        <Label fx:id="timeView" layoutX="320.0" layoutY="87.0" prefHeight="79.0" prefWidth="274.0" textAlignment="CENTER" />
+        <Label fx:id="currentState" layoutX="343.0" layoutY="78.0" prefHeight="18.0" prefWidth="159.0" text="Label" />
       <TextField fx:id="zadanie" layoutX="208.0" layoutY="230.0" prefHeight="34.0" prefWidth="390.0" />
       <Label fx:id="task1" layoutX="82.0" layoutY="277.0" prefHeight="26.0" prefWidth="390.0" />
       <Label fx:id="task2" layoutX="82.0" layoutY="313.0" prefHeight="26.0" prefWidth="390.0" />

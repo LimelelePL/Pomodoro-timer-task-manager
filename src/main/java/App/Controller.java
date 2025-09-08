@@ -15,6 +15,8 @@ import javafx.fxml.FXML;
 import java.io.IOException;
 import java.util.Objects;
 
+import static javafx.scene.text.TextAlignment.CENTER;
+
 
 public class Controller {
     @FXML public Button RozpocznijPomodoro;
@@ -48,7 +50,7 @@ public class Controller {
     private int breakTime = 5;
     private int longBreakTime = 15;
 
-    public Controller() throws InterruptedException {
+    public Controller() {
         appTimer = new AppTimer();
         taskManager = new TaskManager();
     }
@@ -59,7 +61,8 @@ public class Controller {
         timeView.setText("00:00");
         timeView.setStyle("-fx-font-size: 90px; -fx-text-fill: #333;");
         currentState.setText("idle");
-        currentState.setStyle("-fx-font-size: 30px; -fx-text-fill: #333;");
+        currentState.setStyle("-fx-font-size: 20px; -fx-text-fill: #333;");
+        currentState.setAlignment(javafx.geometry.Pos.CENTER);
 
         appTimer.setOnTick(seconds ->
                 Platform.runLater(() -> {
@@ -103,12 +106,13 @@ public class Controller {
     }
 
     @FXML
-    public void startPomodoro(ActionEvent e) throws InterruptedException {
+    public void startPomodoro(ActionEvent e)  {
 
-        appTimer.countPomodoro(pomodoroTime *60, breakTime*60, longBreakTime*60);
+        appTimer.countPomodoro(pomodoroTime , breakTime, longBreakTime);
+       // appTimer.countPomodoro(pomodoroTime *60, breakTime*60, longBreakTime*60);
     }
     @FXML
-    public void StopPomodoro(ActionEvent e) throws InterruptedException {
+    public void StopPomodoro(ActionEvent e)  {
         appTimer.PausePomodoroTimer();
     }
     @FXML
@@ -182,11 +186,13 @@ public class Controller {
     }
 
     private String formatState(AppTimer.TimerState state) {
+        if (state == AppTimer.TimerState.PAUSED) {
+            return "Paused (" + formatState(appTimer.getPreviousState()) + ")";
+        }
         return switch (state) {
             case POMODORO -> "Work";
             case BREAK -> "Break";
             case LONG_BREAK -> "Long Break";
-            case PAUSED -> "Paused";
             default -> "Idle";
         };
     }
