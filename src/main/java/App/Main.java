@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 // toDo: zapisywanie do pliku zadan
+// toDo: dodać skipowanie
 
 public class Main extends Application {
     public static void main(String[] args){
