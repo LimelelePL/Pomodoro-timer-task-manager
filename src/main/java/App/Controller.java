@@ -15,7 +15,6 @@ import javafx.fxml.FXML;
 import java.io.IOException;
 import java.util.Objects;
 
-import static javafx.scene.text.TextAlignment.CENTER;
 
 
 public class Controller {

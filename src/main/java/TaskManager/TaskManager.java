@@ -1,17 +1,15 @@
 package TaskManager;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 
 public class TaskManager  {
-    private ArrayList<Task> tasks;
-    Scanner scanner = new Scanner(System.in);
+    private final ArrayList<Task> tasks;
 
     public TaskManager() {
         tasks = new ArrayList<Task>();
     }
-
 
     public void addTask(String taskName) {
         tasks.add(new Task(taskName, false));
