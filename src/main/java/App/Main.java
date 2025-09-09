@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 // toDo: dodać dynamiczne rozciaganie okna
+// toDo: dodać odpowiednie komunikaty typu ze nie mozna dodac wiecej zadań
 
 public class Main extends Application {
     public static void main(String[] args){

@@ -21,17 +21,6 @@ public class AppTimer {
 
     private IntConsumer onTick;
 
-    public void setOnTick(IntConsumer onTick) {
-        this.onTick = onTick;
-    }
-
-    public TimerState getCurrentState() {
-        return currentState;
-    }
-
-    public int getCurrentInterval(){
-        return currentInterval;
-    }
 
     public void countPomodoro(int pomodoroTime, int breakTime, int longBreakTime){
         this.longBreakTime = longBreakTime;
@@ -243,6 +232,18 @@ public class AppTimer {
             }
         };
         timer.scheduleAtFixedRate(timerTask, 0, 1000);
+    }
+
+    public void setOnTick(IntConsumer onTick) {
+        this.onTick = onTick;
+    }
+
+    public TimerState getCurrentState() {
+        return currentState;
+    }
+
+    public int getCurrentInterval(){
+        return currentInterval;
     }
 
     public TimerState getPreviousState() {
