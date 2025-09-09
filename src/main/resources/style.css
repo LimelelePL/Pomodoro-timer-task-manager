@@ -44,7 +44,7 @@
     -fx-border-radius: 5px;
 }
 
-#RozpocznijPomodoro, #taskName, #properties{
+#RozpocznijPomodoro, #taskName, #properties, #skip{
     -fx-text-fill: "red";
     -fx-background-color: "pink";
     -fx-border-color: "990000";

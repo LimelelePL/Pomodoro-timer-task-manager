@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-// toDo: dodać skipowanie
 // toDo: dodać dynamiczne rozciaganie okna
 
 public class Main extends Application {

@@ -33,11 +33,11 @@ public class AppTimer {
         return currentInterval;
     }
 
-    public void countPomodoro(int pomodoroTime, int breakTime, int intervals){
-        this.intervals=intervals;
+    public void countPomodoro(int pomodoroTime, int breakTime, int longBreakTime){
+        this.longBreakTime = longBreakTime;
+        this.intervals=4;
         this.breakTime=breakTime; //*60
         this.pomodoroTime=pomodoroTime;
-        this.longBreakTime=breakTime*3; //*60
 
         countPomodoroBySeconds(this.pomodoroTime);
     }
@@ -59,6 +59,64 @@ public class AppTimer {
         PausePomodoroTimer();
     }
 
+    public void skip() {
+        if (timer == null) {
+            return;
+        }
+        timer.cancel();
+
+        if (currentState==TimerState.PAUSED) {
+            if (previousState==TimerState.POMODORO) {
+                countPomodoroBySeconds(currentTimeTillEnd);
+            } else if (previousState==TimerState.BREAK) {
+                countBreakTimeBySeconds(currentTimeTillEnd);
+            } else if (previousState==TimerState.LONG_BREAK) {
+                countLongBreakTime(currentTimeTillEnd);
+            }
+        }
+
+        if (currentState == TimerState.LONG_BREAK) {
+            previousState = TimerState.LONG_BREAK;
+            currentState = TimerState.POMODORO;
+            currentInterval = 1;
+            currentTimeTillEnd = pomodoroTime;
+            countPomodoroBySeconds(this.pomodoroTime);
+            try {
+                SoundNotification.playSound("/sound.mp3");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        } else if (currentState == TimerState.POMODORO) {
+            if (currentInterval == intervals) {
+                currentState = TimerState.LONG_BREAK;
+                previousState = TimerState.POMODORO;
+                currentTimeTillEnd = longBreakTime;
+                countLongBreakTime(this.longBreakTime);
+                PausePomodoroTimer();
+                return;
+            } else {
+                previousState = TimerState.POMODORO;
+                currentState = TimerState.BREAK;
+                currentTimeTillEnd = breakTime;
+                countBreakTimeBySeconds(this.breakTime);
+            }
+        } else if (currentState == TimerState.BREAK) {
+            previousState = TimerState.BREAK;
+            currentState = TimerState.POMODORO;
+            currentInterval++;
+            currentTimeTillEnd = pomodoroTime;
+            countPomodoroBySeconds(this.pomodoroTime);
+        }
+
+        PausePomodoroTimer();
+
+        try {
+            SoundNotification.playSound("/sound.mp3");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void resumePomodoroTimer()  {
         if (timer==null) {
             return;
@@ -76,11 +134,11 @@ public class AppTimer {
     }
 
     public void PausePomodoroTimer()  {
-
         if (timer==null) {
             return;
         }
         timer.cancel();
+
         if (currentState==TimerState.POMODORO) {
             previousState=currentState;
             currentState = TimerState.PAUSED;
@@ -105,20 +163,17 @@ public class AppTimer {
     public void countPomodoroBySeconds(int time)  {
         currentState=TimerState.POMODORO;
         countBySeconds(time);
-
     }
 
     private void countLongBreakTime(int time)  {
         currentState=TimerState.LONG_BREAK;
         countBySeconds(longBreakTime);
-        currentInterval=0;
 
     }
 
     private void countBreakTimeBySeconds(int time)  {
         currentState=TimerState.BREAK;
         countBySeconds(time);
-
     }
 
     private void countBySeconds(int intervalTime)  {
@@ -140,15 +195,26 @@ public class AppTimer {
                 if (i < 0) {
                     timer.cancel();
 
-                    if (currentInterval == intervals) {
-                        countLongBreakTime(longBreakTime);
-
+                    if(currentState == TimerState.LONG_BREAK) {
+                        try {
+                            SoundNotification.playSound("/sound.mp3");
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                        currentInterval = 1;
+                        currentTimeTillEnd = pomodoroTime;
+                        countPomodoroBySeconds(pomodoroTime);
+                        PausePomodoroTimer();
+                        return;
+                    }
+                    if (currentInterval == intervals ) {
                         try {
                             SoundNotification.playSound("/sound.mp3");
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
                         currentTimeTillEnd = longBreakTime;
+                        countLongBreakTime(longBreakTime);
                         PausePomodoroTimer();
                         return;
                     }

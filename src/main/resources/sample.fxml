@@ -20,7 +20,7 @@
             </image>
         </ImageView>
         <Label fx:id="timeView" layoutX="320.0" layoutY="87.0" prefHeight="79.0" prefWidth="274.0" textAlignment="CENTER" />
-        <Label fx:id="currentState" layoutX="343.0" layoutY="78.0" prefHeight="18.0" prefWidth="159.0" text="Label" />
+        <Label fx:id="currentState" layoutX="266.0" layoutY="78.0" prefHeight="18.0" prefWidth="327.0" text="Label" />
       <TextField fx:id="zadanie" layoutX="208.0" layoutY="230.0" prefHeight="34.0" prefWidth="390.0" />
       <Label fx:id="task1" layoutX="82.0" layoutY="277.0" prefHeight="26.0" prefWidth="390.0" />
       <Label fx:id="task2" layoutX="82.0" layoutY="313.0" prefHeight="26.0" prefWidth="390.0" />
@@ -35,5 +35,6 @@
       <CheckBox fx:id="c5" layoutX="36.0" layoutY="426.0" mnemonicParsing="false" onAction="#removeTask5" visible="false" />
       <CheckBox fx:id="c6" layoutX="36.0" layoutY="458.0" mnemonicParsing="false" onAction="#removeTask6" visible="false" />
       <Button fx:id="properties" layoutX="143.0" layoutY="24.0" mnemonicParsing="false" onAction="#chooseProperties" text="properties" />
+      <Button fx:id="skip" layoutX="589.0" layoutY="129.0" mnemonicParsing="false" onAction="#skipState" text="Skip" />
     </children>
 </AnchorPane>

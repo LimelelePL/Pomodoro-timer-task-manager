@@ -54,7 +54,7 @@ public class Controller {
     public void initialize() {
         timeView.setText("00:00");
         timeView.setStyle("-fx-font-size: 90px; -fx-text-fill: #333;");
-        currentState.setText("idle");
+        currentState.setText(" start the counter and enjoy! ");
         currentState.setStyle("-fx-font-size: 20px; -fx-text-fill: #333;");
         currentState.setAlignment(javafx.geometry.Pos.CENTER);
 
@@ -69,6 +69,11 @@ public class Controller {
         taskManager.loadTasksFromFile("src/main/java/TaskManager/tasks.txt");
         updateTaskView();
 
+    }
+
+    @FXML
+    public void skipState(ActionEvent e){
+        appTimer.skip();
     }
 
     @FXML
@@ -106,8 +111,8 @@ public class Controller {
     @FXML
     public void startPomodoro(ActionEvent e)  {
 
-        appTimer.countPomodoro(pomodoroTime , breakTime, longBreakTime);
-       // appTimer.countPomodoro(pomodoroTime *60, breakTime*60, longBreakTime*60);
+       //appTimer.countPomodoro(pomodoroTime/7 , breakTime/3, 5);
+       appTimer.countPomodoro(pomodoroTime *60, breakTime*60, longBreakTime*60);
     }
     @FXML
     public void StopPomodoro(ActionEvent e)  {
@@ -208,7 +213,7 @@ public class Controller {
             case POMODORO -> "Work";
             case BREAK -> "Break";
             case LONG_BREAK -> "Long Break";
-            default -> "Idle";
+            default -> "enjoy";
         };
     }
 
