@@ -15,8 +15,6 @@ import javafx.fxml.FXML;
 import java.io.IOException;
 import java.util.Objects;
 
-
-
 public class Controller {
     @FXML public Button RozpocznijPomodoro;
     @FXML public Button taskName;
@@ -32,8 +30,6 @@ public class Controller {
     @FXML private Label task6;
 
     @FXML private TextField zadanie;
-    @FXML private pomodoroPick pomodoroPickController;
-
 
     @FXML private CheckBox c1;
     @FXML private CheckBox c2;
@@ -54,7 +50,6 @@ public class Controller {
         taskManager = new TaskManager();
     }
 
-
     @FXML
     public void initialize() {
         timeView.setText("00:00");
@@ -70,6 +65,10 @@ public class Controller {
                             " #" +  appTimer.getCurrentInterval());
                 })
         );
+
+        taskManager.loadTasksFromFile("src/main/java/TaskManager/tasks.txt");
+        updateTaskView();
+
     }
 
     @FXML
@@ -137,11 +136,10 @@ public class Controller {
             }
 
             if (added) {
-                System.out.println("Added task: " + taskName);
+                taskManager.addTask(taskName);
             } else {
                 System.out.println("Task list is full. Cannot add more tasks.");
             }
-
 
             zadanie.clear();
         }
@@ -170,7 +168,7 @@ public class Controller {
     private void removeTask(int index) {
         Label[] taskLabels = {task1, task2, task3, task4, task5, task6};
         CheckBox[] checkBoxes = {c1, c2, c3, c4, c5, c6};
-
+    //moving tasks up
         for (int i = index; i < taskLabels.length - 1; i++) {
             taskLabels[i].setText(taskLabels[i + 1].getText());
             checkBoxes[i].setVisible(checkBoxes[i + 1].isVisible());
@@ -181,7 +179,25 @@ public class Controller {
         checkBoxes[checkBoxes.length - 1].setVisible(false);
         checkBoxes[checkBoxes.length - 1].setSelected(false);
 
-        taskManager.removeTask(index + 1);
+        taskManager.removeTask(index);
+    }
+
+    private void updateTaskView(){
+        Label[] taskLabels = {task1, task2, task3, task4, task5, task6};
+        CheckBox[] checkBoxes = {c1, c2, c3, c4, c5, c6};
+
+        for (int i=0; i<taskLabels.length; i++){
+            if (i<taskManager.getTasks().size()){
+                taskLabels[i].setText(taskManager.getTasks().get(i).getTaskName());
+                checkBoxes[i].setVisible(true);
+                checkBoxes[i].setSelected(taskManager.getTasks().get(i).isDone());
+            } else {
+                taskLabels[i].setText("");
+                checkBoxes[i].setVisible(false);
+                checkBoxes[i].setSelected(false);
+            }
+        }
+
     }
 
     private String formatState(AppTimer.TimerState state) {

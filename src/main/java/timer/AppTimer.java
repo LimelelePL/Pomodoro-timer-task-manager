@@ -13,9 +13,7 @@ public class AppTimer {
     private int currentInterval=1;
     private int longBreakTime;
 
-
     private Timer timer;
-
 
     public enum TimerState{POMODORO, BREAK, LONG_BREAK, PAUSED}
     private TimerState currentState=TimerState.POMODORO;
@@ -61,9 +59,8 @@ public class AppTimer {
         PausePomodoroTimer();
     }
 
-    public void resumePomodoroTimer() throws InterruptedException {
+    public void resumePomodoroTimer()  {
         if (timer==null) {
-            System.out.println("Timer is not running");
             return;
         }
 
@@ -75,16 +72,12 @@ public class AppTimer {
             } else if (previousState==TimerState.LONG_BREAK) {
                 countLongBreakTime(currentTimeTillEnd);
             }
-        } else {
-            System.out.println("Timer is not paused");
         }
-        System.out.println("\nResuming timer...");
     }
 
     public void PausePomodoroTimer()  {
 
         if (timer==null) {
-            System.out.println("Timer is not running");
             return;
         }
         timer.cancel();
@@ -106,14 +99,10 @@ public class AppTimer {
             if (onTick != null) {
                 onTick.accept(currentTimeTillEnd);
             }
-        } else {
-            System.out.println("Timer is not running");
         }
-        System.out.println("\nTimer paused");
     }
 
     public void countPomodoroBySeconds(int time)  {
-        System.out.println("aktualny interval: "+currentInterval);
         currentState=TimerState.POMODORO;
         countBySeconds(time);
 
@@ -150,13 +139,10 @@ public class AppTimer {
                 currentTimeTillEnd = i;
                 if (i < 0) {
                     timer.cancel();
-                    System.out.println("\nCzas minął!");
 
                     if (currentInterval == intervals) {
-
                         countLongBreakTime(longBreakTime);
 
-                        System.out.println("long break");
                         try {
                             SoundNotification.playSound("/sound.mp3");
                         } catch (Exception e) {
@@ -167,8 +153,6 @@ public class AppTimer {
                         return;
                     }
                     if (currentState == TimerState.POMODORO) {
-
-                        System.out.println("Koniec pomodoro. Czas na przerwę!");
                         try {
                             SoundNotification.playSound("/sound.mp3");
                         } catch (Exception e) {
@@ -178,7 +162,6 @@ public class AppTimer {
                         countBreakTimeBySeconds(breakTime);
                         PausePomodoroTimer();
                     } else if (currentState == TimerState.BREAK) {
-                        System.out.println("Koniec przerwy. Kolejne pomodoro!");
                         currentInterval++;
                         try {
                             SoundNotification.playSound("/sound.mp3");
@@ -200,9 +183,4 @@ public class AppTimer {
         return previousState;
     }
 
-    public static void main (String[] args) throws InterruptedException {
-        AppTimer appTimer =new AppTimer();
-        appTimer.countBySeconds(10);
-
-    }
 }

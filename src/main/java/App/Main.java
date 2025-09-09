@@ -11,8 +11,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-// toDo: zapisywanie do pliku zadan
 // toDo: dodać skipowanie
+// toDo: dodać dynamiczne rozciaganie okna
 
 public class Main extends Application {
     public static void main(String[] args){
@@ -20,7 +20,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/sample.fxml")));
             Scene scene = new Scene(root);
