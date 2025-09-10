@@ -2,7 +2,7 @@ package TaskManager;
 
 
 public class Task{
-    private String taskName;
+    private final String taskName;
     private boolean isDone;
 
     public Task(String taskName, boolean isDone) {

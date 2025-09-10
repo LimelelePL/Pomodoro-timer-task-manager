@@ -149,7 +149,7 @@ public class AppTimer {
         }
     }
 
-    public void countPomodoroBySeconds(int time)  {
+    private void countPomodoroBySeconds(int time)  {
         currentState=TimerState.POMODORO;
         countBySeconds(time);
     }
