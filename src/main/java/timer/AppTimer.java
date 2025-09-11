@@ -1,11 +1,11 @@
 package timer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.function.IntConsumer;
 
-
-public class AppTimer {
+public class AppTimer implements Subject {
     private int currentTimeTillEnd;
     private int intervals;
     private int breakTime;
@@ -19,8 +19,7 @@ public class AppTimer {
     private TimerState currentState=TimerState.POMODORO;
     private TimerState previousState=TimerState.POMODORO;
 
-    private IntConsumer onTick;
-
+    private List<TimerObserver> observers=new ArrayList<>();
 
     public void countPomodoro(int pomodoroTime, int breakTime, int longBreakTime){
         this.longBreakTime = longBreakTime;
@@ -131,21 +130,15 @@ public class AppTimer {
         if (currentState==TimerState.POMODORO) {
             previousState=currentState;
             currentState = TimerState.PAUSED;
-            if (onTick != null) {
-                onTick.accept(currentTimeTillEnd);
-            }
+           notifyObservers();
         } else if (currentState==TimerState.BREAK) {
             previousState=currentState;
             currentState = TimerState.PAUSED;
-            if (onTick != null) {
-                onTick.accept(currentTimeTillEnd);
-            }
+          notifyObservers();
         } else if (currentState==TimerState.LONG_BREAK) {
             previousState=currentState;
             currentState = TimerState.PAUSED;
-            if (onTick != null) {
-                onTick.accept(currentTimeTillEnd);
-            }
+            notifyObservers();
         }
     }
 
@@ -176,9 +169,7 @@ public class AppTimer {
 
             @Override
             public void run() {
-                if (onTick != null) {
-                    onTick.accept(i);
-                }
+              notifyObservers();
                 i--;
                 currentTimeTillEnd = i;
                 if (i < 0) {
@@ -234,8 +225,21 @@ public class AppTimer {
         timer.scheduleAtFixedRate(timerTask, 0, 1000);
     }
 
-    public void setOnTick(IntConsumer onTick) {
-        this.onTick = onTick;
+    @Override
+    public void addObserver(TimerObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(TimerObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (TimerObserver observer : observers) {
+            observer.update(currentTimeTillEnd);
+        }
     }
 
     public TimerState getCurrentState() {

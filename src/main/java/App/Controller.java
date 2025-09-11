@@ -3,7 +3,6 @@ package App;
 import TaskManager.TaskManager;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -14,11 +13,12 @@ import timer.AppTimer;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import timer.TimerObserver;
 
 import java.io.IOException;
 import java.util.Objects;
 
-public class Controller {
+public class Controller  implements TimerObserver {
     @FXML public Button RozpocznijPomodoro;
     @FXML public Button taskName;
     @FXML public Button properties;
@@ -49,6 +49,8 @@ public class Controller {
     private int breakTime = 5;
     private int longBreakTime = 15;
 
+    private int time;
+
     public Controller() {
         appTimer = new AppTimer();
         taskManager = new TaskManager();
@@ -56,6 +58,7 @@ public class Controller {
 
     @FXML
     public void initialize() {
+        appTimer.addObserver(this);
         timeView.setText("00:00");
         timeView.setStyle("-fx-font-size: 110px; -fx-text-fill: #333;");
         timeView.setAlignment(javafx.geometry.Pos.CENTER);
@@ -63,13 +66,7 @@ public class Controller {
         currentState.setStyle("-fx-font-size: 20px; -fx-text-fill: #333;");
         currentState.setAlignment(javafx.geometry.Pos.CENTER);
 
-        appTimer.setOnTick(seconds ->
-                Platform.runLater(() -> {
-                    timeView.setText(formatTime(Math.max(0, seconds)));
-                    currentState.setText(formatState(appTimer.getCurrentState()) +
-                            " #" +  appTimer.getCurrentInterval());
-                })
-        );
+        this.update(time);
 
         taskManager.loadTasksFromFile("src/main/java/TaskManager/tasks.txt");
         updateTaskView();
@@ -255,6 +252,16 @@ public class Controller {
         return String.format("%02d:%02d", minutes, seconds);
     }
 
+
+    @Override
+    public void update(int time) {
+        this.time = time;
+        Platform.runLater(() -> {
+            timeView.setText(formatTime(Math.max(0, time)));
+            currentState.setText(formatState(appTimer.getCurrentState()) +
+                    " #" + appTimer.getCurrentInterval());
+        });
+    }
 }
 
 
